@@ -41,10 +41,14 @@ $jam_buka     = $data_kantin['jam_buka']  ?? '07:00:00';
 $jam_tutup    = $data_kantin['jam_tutup'] ?? '15:00:00';
 $status_buka  = $data_kantin['status_buka'] ?? 'Buka';
 
+// KODE BARU — arahkan ke default yang benar
 $banner = (!empty($data_kantin['banner']) && file_exists("../../uploads/{$data_kantin['banner']}"))
-    ? $data_kantin['banner'] : 'default-banner.jpg';
-$logo   = (!empty($data_kantin['logo'])   && file_exists("../../uploads/{$data_kantin['logo']}"))
-    ? $data_kantin['logo']   : 'default-logo.png';
+    ? '../../uploads/' . $data_kantin['banner']
+    : '../../public/assets/img/default-banner.svg';
+
+$logo   = (!empty($data_kantin['logo']) && file_exists("../../uploads/logo/{$data_kantin['logo']}"))
+    ? '../../uploads/logo/' . $data_kantin['logo']
+    : '../../public/assets/img/default-logo.svg';
 
 date_default_timezone_set('Asia/Jakarta');
 $jam_sekarang = date('H:i:s');
@@ -249,14 +253,14 @@ tailwind.config = { theme: { extend: { colors: { primary: '#f97316' } } } }
 
     <!-- HERO BANNER -->
     <div class="relative rounded-3xl overflow-hidden mb-8 shadow-2xl h-72 lg:h-80">
-        <img src="../../uploads/<?= htmlspecialchars($banner) ?>"
-             onerror="this.src='../../uploads/default-banner.jpg'"
+        <img src="<?= htmlspecialchars($banner) ?>"
+             onerror="this.src='../../public/assets/img/default-banner.svg'">
              class="w-full h-full object-cover" alt="Banner">
         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent"></div>
         <div class="absolute bottom-6 left-6 right-6">
             <div class="flex flex-col lg:flex-row lg:items-end gap-5">
-                <img src="../../uploads/<?= htmlspecialchars($logo) ?>"
-                     onerror="this.src='../../uploads/logo/logo_1778890101.png'"
+                <img src="<?= htmlspecialchars($logo) ?>"
+                     onerror="this.src='../../public/assets/img/default-logo.svg'"
                      class="w-20 h-20 lg:w-28 lg:h-28 rounded-2xl border-4 border-white/80 shadow-2xl object-cover"
                      alt="Logo">
                 <div class="flex-1">

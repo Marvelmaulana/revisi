@@ -10,10 +10,13 @@ if (!isset($_SESSION['id_user']) || ($_SESSION['role'] ?? '') !== 'pembeli') {
 
 $id_user = (int)$_SESSION['id_user'];
 $q = mysqli_query($koneksi, "
-    SELECT m.*, k.nama_kantin, COALESCE(AVG(rm.nilai_rating),0) AS avg_rating, COUNT(rm.id_rating) AS jml_rating
+    SELECT m.*, k.nama_kantin, 
+           COALESCE(AVG(rm.nilai_rating),0) AS avg_rating, 
+           COUNT(rm.id_rating) AS jml_rating
     FROM menu m
     JOIN kantin k ON m.id_kantin = k.id_kantin
     LEFT JOIN rating_menu rm ON m.id_menu = rm.id_menu
+    WHERE COALESCE(m.status,'Tersedia') <> 'Habis'
     GROUP BY m.id_menu
     ORDER BY k.nama_kantin ASC, m.id_menu DESC
 ");

@@ -19,10 +19,10 @@ if ($aksi == 'tambah') {
     $deskripsi = mysqli_real_escape_string($koneksi, $_POST['deskripsi']);
     $opsi_pilihan = mysqli_real_escape_string($koneksi, $_POST['opsi_pilihan'] ?? '');
 
-    // Logika Gambar
-    $filename = $_FILES['foto']['name'];
+    // KODE BARU - nama file dijamin bersih, tanpa spasi
     $tmp_name = $_FILES['foto']['tmp_name'];
-    $file_ext = pathinfo($filename, PATHINFO_EXTENSION);
+    $file_ext = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));
+    $newName = time() . "_" . bin2hex(random_bytes(6)) . "." . $file_ext;
     
     // Buat nama unik agar tidak bentrok
     $newName = time() . "_" . uniqid() . "." . $file_ext; 
