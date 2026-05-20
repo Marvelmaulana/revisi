@@ -17,6 +17,7 @@ if (!$user_data || $user_data['role'] !== 'penjual' || empty($user_data['id_kant
     header("Location: ../auth/login.php?error=penjual_saja"); exit();
 }
 
+
 $id_kantin = (int)$user_data['id_kantin'];
 $_SESSION['id_kantin']    = $id_kantin;
 $_SESSION['nama_penjual'] = $user_data['username'];
